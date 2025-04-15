@@ -1,0 +1,32 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+  instance:
+    ip-address: true
+spring:
+  application:
+    name: SPRING_CLOUD_GATEWAY
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+server:
+  port: 8080
