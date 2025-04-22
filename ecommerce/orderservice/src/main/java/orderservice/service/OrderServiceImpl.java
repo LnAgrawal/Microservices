@@ -29,13 +29,14 @@ public class OrderServiceImpl implements OrderService{
     }*/
     @Override
     public OrderDto saveOrder(Order order) {
-        Payment payment = webClient.post()
+        Payment payment = restTemplate.postForObject("http://localhost:8382/payment/save", new Payment(), Payment.class);
+       /* Payment payment = webClient.post()
                         .uri("/payment/save")
                 .bodyValue(new Payment())
                 .retrieve()
                 .toEntity(Payment.class)
                 .block()
-                .getBody();
+                .getBody();*/
         OrderDto resOrderDto = new OrderDto();
         Order resOrder = orderRepository.save(order);
         resOrderDto.setId(resOrder.getId());

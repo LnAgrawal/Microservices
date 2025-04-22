@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost/ecommerce
+    username: sa
+    password: sa@123
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer:  org.springframework.kafka.support.serializer.JsonSerializer
+server:
+  port: 9090

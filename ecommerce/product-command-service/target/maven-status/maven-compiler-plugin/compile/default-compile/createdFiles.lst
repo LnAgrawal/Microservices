@@ -1,0 +1,6 @@
+com\training\dto\ProductEvent.class
+com\training\repository\ProductRepository.class
+com\training\entity\Product.class
+com\training\service\ProductCommandService.class
+com\training\controller\ProductCommandController.class
+com\training\ProductCommandServiceApplication.class

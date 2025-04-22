@@ -1,23 +1,17 @@
+#spring:
+#  config:
+#    import: optional:configserver:http://localhost:8686
+#  application:
+#    name: product-service
+
 spring:
+  config:
+    import: optional:configserver:http://localhost:8686
   application:
     name: product-service
-  datasource:
-    url: jdbc:mysql://localhost/ecommerce
-    username: sa
-    password: sa@123
-    driverClassName: com.mysql.cj.jdbc.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    hibernate:
-      ddl-auto: update
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
-  instance:
-    ip-address: true
+  reactor:
+    context-propagation: auto
+
 server:
   port: 8182
 
@@ -32,6 +26,12 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      type: B3
+    enabled: true
 
 resilience4j:
   circuitbreaker:
@@ -46,3 +46,8 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 3
         sliding-window-size: 10
         sliding-window-type: time-based
+logging:
+  file:
+    name: productservice.log
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

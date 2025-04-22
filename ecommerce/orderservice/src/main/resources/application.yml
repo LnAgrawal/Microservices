@@ -1,4 +1,6 @@
 spring:
+  reactor:
+    context-propagation: auto
   application:
     name: order-service
   datasource:
@@ -20,3 +22,17 @@ eureka:
     ip-address: true
 server:
   port: 8282
+
+logging:
+  file:
+    name: orderservice.log
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      type: B3
+    enabled: true
